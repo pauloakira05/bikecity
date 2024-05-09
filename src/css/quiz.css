@@ -1,0 +1,150 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@100..900&display=swap");
+
+:root {
+    --black-color: hsl(0, 0%, 12%);
+    --body-color: hsl(221, 31%, 86%);
+    --body-font: "Montserrat", sans-serif;
+    --biggest-font-size: 3.7rem;
+    --h2-font-size: 1.25rem;
+    --normal-font-size: .938rem;
+    --small-font-size: .813rem;
+    --font-regular: 400;
+    --font-semi-bold: 600;
+    --font-bold: 700;
+}
+
+* {
+    padding: 0%;
+    margin: 0%;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--body-color); 
+    color: var(--body-color);
+    font-family: var(--body-font);
+    font-size: var(--normal-font-size);
+     
+}
+
+.container-header {
+    max-width: 1200px;
+    margin: auto;
+}
+
+.flex {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+header {
+    padding: 30px 4%;
+}
+
+#header-brand {
+    color: var(--black-color);
+    font-weight: var(--font-semi-bold);
+    text-decoration: none;
+    margin-right: 50px;
+    font-size: 20px;
+}
+
+header ul {
+    list-style-type: none;
+}
+
+header ul li {
+    display: inline-block;
+    margin-right: 40px;
+}
+
+header ul li a {
+    text-decoration: none;
+    color: var(--black-color);
+}
+
+header i {
+    color: var(--black-color);
+    margin: 0 40px;
+}
+
+main {
+    height: 100vh; 
+    justify-content: center;
+    align-items: center;
+    display: flex;
+}
+
+button {
+    cursor: pointer;
+}
+
+.container {
+    background-color: var(--black-color);
+    width: 90%;
+    max-width: 800px;
+    border: 3px solid var(--black-color);
+    border-radius: 5px;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.question-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 24px;
+}
+
+.question {
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.answers-container {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
+
+.next-question {
+    margin-top: 32px;
+}
+
+.button {
+    background-color: var(--body-color);
+    color: var(--black-color);
+    border: 0;
+    border-radius: 5px;
+    height: 48px;
+    padding: 0 32px;
+    transition: filter 0.2s;
+}
+
+.button:not(:disabled):hover {
+    filter: brightness(0.8);
+}
+
+.answer:disabled {
+    cursor: not-allowed;
+}
+
+.hide {
+    display: none;
+}
+
+.correct {
+    background-color: rgb(77, 218, 84);
+}
+
+.incorrect {
+    background-color: rgb(197, 21, 21);
+}

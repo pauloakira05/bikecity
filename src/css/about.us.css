@@ -1,0 +1,118 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@100..900&display=swap");
+
+:root {
+    --black-color: hsl(0, 0%, 12%);
+    --body-color: hsl(221, 31%, 86%);
+    --body-font: "Montserrat", sans-serif;
+    --biggest-font-size: 3.6rem;
+    --h2-font-size: 1.31rem;
+    --normal-font-size: .928rem;
+    --small-font-size: .799rem;
+    --font-regular: 385;
+    --font-semi-bold: 590;
+    --font-bold: 650;
+}
+
+.secondContent {
+    font-size: 1.1em;
+    line-height: 1.5;
+  }
+
+* {
+    padding: 0%;
+    margin: 0%;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--body-color); 
+    color: var(--body-color);
+    font-family: var(--body-font);
+    font-size: var(--normal-font-size);
+     
+}
+
+.container-header {
+    max-width: 1200px;
+    margin: auto;
+}
+
+.flex {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+header {
+    padding: 30px 4%;
+}
+
+#header-brand {
+    color: var(--black-color);
+    font-weight: var(--font-semi-bold);
+    text-decoration: none;
+    margin-right: 50px;
+    font-size: 20px;
+}
+
+header ul {
+    list-style-type: none;
+}
+
+header ul li {
+    display: inline-block;
+    margin-right: 40px;
+}
+
+header ul li a {
+    text-decoration: none;
+    color: var(--black-color);
+}
+
+.title {
+    font-size: 35px;
+    margin: 0px 125px 18px 0px;
+    color: var(--black-color);
+}
+
+.content {
+    font-optical-sizing: auto;
+    font-weight: 700;
+    font-style: normal;
+    line-height: 1.8;
+    font-size: 15px;
+    margin: 39px 121px 19px 1px;
+    color: var(--black-color);
+}
+
+#ourBlend {
+    display: flex;
+    align-items: center;
+    margin-top: 200px;
+}
+
+#blend {
+    border-radius: 5px;
+    width: 820px;
+    height: 415px;
+    margin: 150px 100px 0px 40px;
+}
+
+#secondContent {
+    color: var(--black-color);
+}
+
+#secondTitle {
+    font-size: 35px;
+}
+
+.subTitle {
+    margin: 60px 0px 20px 0px;
+    font-size: 24px;
+
+}
+
+.paragraph {
+    color: var(--black-color);
+    font-size: 15px;
+}
