@@ -1,164 +1,83 @@
-// Seleção dos elementos DOM
-const $startGameButton = document.querySelector(".start-quiz");
-const $nextQuestionButton = document.querySelector(".next-question");
-const $questionsContainer = document.querySelector(".question-container");
-const $questionText = document.querySelector(".question");
-const $answersContainer = document.querySelector(".answers-container");
-const $answers = document.querySelectorAll(".answer");
-
-// Variáveis de controle do jogo
-let currentQuestionIndex = 0;
-let totalCorrect = 0;
-
-// Adiciona listeners de evento aos botões
-$startGameButton.addEventListener("click", startGame);
-$nextQuestionButton.addEventListener("click", displayNextQuestion);
-
-// Função para iniciar o jogo
-function startGame() {
-  $startGameButton.classList.add("hide");
-  $questionsContainer.classList.remove("hide");
-  displayNextQuestion();
-}
-
-// Função para exibir a próxima pergunta
-function displayNextQuestion() {
-  resetState();
+document.addEventListener('DOMContentLoaded', function() {
+  // Obtenha referências aos elementos do DOM
+  const startQuizBtn = document.querySelector('.start-quiz');
+  const nextQuestionBtn = document.querySelector('.next-question');
+  const questionContainer = document.querySelector('.question-container');
+  const questionList = document.getElementById('question-list');
+  const submitBtn = document.getElementById('submit-btn');
+  const resultContainer = document.getElementById('result-container');
   
-  if (questions.length === currentQuestionIndex) {
-    return finishGame();
-  }
-
-  $questionText.textContent = questions[currentQuestionIndex].question;
-  questions[currentQuestionIndex].answers.forEach(answer => {
-    const newAnswer = document.createElement("button");
-    newAnswer.classList.add("button", "answer");
-    newAnswer.textContent = answer.text;
-    if (answer.correct) {
-      newAnswer.dataset.correct = answer.correct;
-    }
-    $answersContainer.appendChild(newAnswer);
-
-    newAnswer.addEventListener("click", selectAnswer);
+  // Adicione um ouvinte de evento de clique ao botão de início do quiz
+  startQuizBtn.addEventListener('click', function() {
+      // Mostre o contêiner de perguntas
+      questionContainer.classList.remove('hide');
+      // Esconda o botão de início do quiz
+      startQuizBtn.classList.add('hide');
+      // Iniciar o quiz
+      showQuestion(0);
   });
-}
 
-// Função para redefinir o estado do jogo
-function resetState() {
-  while($answersContainer.firstChild) {
-    $answersContainer.removeChild($answersContainer.firstChild);
+  // Função para mostrar uma pergunta com base no índice
+  function showQuestion(index) {
+      // Limpe o conteúdo da lista de perguntas
+      questionList.innerHTML = '';
+      // Obtenha a pergunta atual do array de perguntas
+      const question = questions[index];
+      // Crie o HTML da pergunta e suas opções
+      const questionHTML = `
+          <li>
+              <h3>${question.question}</h3>
+              <ul>
+                  ${question.options.map(option => `<li><input type="radio" name="question-${index}" value="${option}">${option}</li>`).join('')}
+              </ul>
+          </li>
+      `;
+      // Adicione o HTML da pergunta à lista de perguntas
+      questionList.innerHTML += questionHTML;
+      // Adicione um ouvinte de evento de clique ao botão de próxima pergunta
+      nextQuestionBtn.addEventListener('click', function() {
+          // Verifique se uma opção foi selecionada
+          const selectedOption = document.querySelector(`input[name="question-${index}"]:checked`);
+          if (!selectedOption) {
+              alert('Por favor, selecione uma opção.');
+              return;
+          }
+          // Avance para a próxima pergunta ou exiba o resultado se for a última pergunta
+          if (index < questions.length - 1) {
+              showQuestion(index + 1);
+          } else {
+              showResult();
+          }
+      });
   }
 
-  document.body.removeAttribute("class");
-  $nextQuestionButton.classList.add("hide");
-}
+  // Função para calcular e exibir o resultado do quiz
+  function showResult() {
+      const userAnswers = [];
+      // Obtenha as respostas do usuário para cada pergunta
+      questions.forEach((question, index) => {
+          const userAnswer = document.querySelector(`input[name="question-${index}"]:checked`).value;
+          userAnswers.push(userAnswer);
+      });
 
-// Função para selecionar uma resposta
-function selectAnswer(event) {
-  const answerClicked = event.target;
+      // Obtenha as respostas corretas
+      const correctAnswers = questions.map(question => question.answer);
 
-  if (answerClicked.dataset.correct) {
-    document.body.classList.add("correct");
-    totalCorrect++;
-  } else {
-    document.body.classList.add("incorrect");
+      // Calcular a pontuação do usuário
+      const score = userAnswers.reduce((acc, current, index) => {
+          if (current === correctAnswers[index]) {
+              acc++;
+          }
+          return acc;
+      }, 0);
+
+      // Gerar HTML com o resultado do quiz
+      const resultHTML = `
+          <h2>Você acertou ${score} de ${questions.length} perguntas!</h2>
+          <p>Parabéns! Você é um verdadeiro ciclista!</p>
+          <!-- Adicione outras informações do resultado aqui, se desejar -->
+      `;
+      // Exibir o resultado na tela
+      resultContainer.innerHTML = resultHTML;
   }
-
-  document.querySelectorAll(".answer").forEach(button => {
-    button.disabled = true;
-
-    if (button.dataset.correct) {
-      button.classList.add("correct");
-    } else {
-      button.classList.add("incorrect");
-    }
-  });
-  
-  $nextQuestionButton.classList.remove("hide");
-  currentQuestionIndex++;
-}
-
-// Função para finalizar o jogo
-function finishGame() {
-  const totalQuestions = questions.length;
-  const performance = Math.floor(totalCorrect * 100 / totalQuestions);
-  
-  let message = "";
-
-  switch (true) {
-    case (performance >= 90):
-      message = "Excellent :)";
-      break;
-    case (performance >= 70):
-      message = "Very good :)";
-      break;
-    case (performance >= 50):
-      message = "Good";
-      break;
-    default:
-      message = "Could do better :(";
-  }
-
-  $questionsContainer.innerHTML = 
-  `
-    <p class="final-message">
-      You got ${totalCorrect} out of ${totalQuestions} questions right!
-      <span>Result: ${message}</span>
-    </p>
-    <button 
-      onclick=window.location.reload() 
-      class="button"
-    >
-      Restart quiz
-    </button>
-  `;
-}
-
-// Array de objetos de perguntas e respostas
-const questions = [
-    {
-      question: "Who is the inventor of the bicycle?",
-      answers: [
-        { text: "Leonardo da Vinci", correct: false },
-        { text: "Karl Drais", correct: true },
-        { text: "Thomas Jefferson", correct: false },
-        { text: "Wilbur Wright", correct: false }
-      ]
-    },
-    {
-      question: "What is the heaviest part of a typical bicycle?",
-      answers: [
-        { text: "Frame", correct: false },
-        { text: "Wheels", correct: false },
-        { text: "Pedals", correct: false },
-        { text: "Seat", correct: true }
-      ]
-    },
-    {
-      question: "What is the maximum speed reached by a cyclist on a common bicycle in a steep downhill?",
-      answers: [
-        { text: "50 km/h", correct: false },
-        { text: "70 km/h", correct: true },
-        { text: "100 km/h", correct: false },
-        { text: "120 km/h", correct: false }
-      ]
-    },
-    {
-      question: "What is the most famous cycling event in the world?",
-      answers: [
-        { text: "Tour de France", correct: true },
-        { text: "Giro d'Italia", correct: false },
-        { text: "Vuelta a España", correct: false },
-        { text: "Paris-Roubaix", correct: false }
-      ]
-    },
-    {
-      question: "How many teeth does a typical road bike crankset have?",
-      answers: [
-        { text: "52/36", correct: false },
-        { text: "50/34", correct: true },
-        { text: "53/39", correct: false },
-        { text: "48/32", correct: false }
-      ]
-    }
-  ];
+});

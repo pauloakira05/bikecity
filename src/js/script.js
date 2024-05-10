@@ -1,5 +1,5 @@
 function exibirMensagemDeBoasVindas() {
-    alert("Bem-vindo ao nosso site! Estamos aqui para tornar sua experiência incrível.");
+    alert("Seja bem-vindo ao nosso site! Estamos aqui para tornar sua experiência incrível.");
 }
 
 function mudarCorDeFundoContinuamente() {
