@@ -38,10 +38,11 @@
 
         /* Estilos para o slideshow */
         .slideshow-container {
-            max-width: 400px;
-            margin: auto;
-            overflow: hidden;
+            max-width: 750px; /* ajuste conforme necessário */
+            margin: 0 auto; /* centraliza horizontalmente */
+            padding: 10px; /* Adiciona um espaçamento interno */
             position: relative;
+            overflow: hidden;
         }
 
         .slides {
@@ -60,6 +61,27 @@
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             padding: 20px;
             margin-bottom: 20px;
+            width: 27%;
+            display: inline-block;
+            margin-right: 20px;
+            justify-content: center;
+            text-align: center;
+            margin-left: 30px;
+        }
+
+        .card button{
+            width: 200px;
+            padding: 10px;
+            border-radius: 3px;
+        }
+
+        .card button:hover{
+            background-color: aqua;
+            cursor: pointer;
+        }
+
+        .card p{
+            font-weight: 700;
         }
 
         /* Estilos para o formulário de contato */
