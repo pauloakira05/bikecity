@@ -4,18 +4,69 @@
     box-sizing: border-box;
 }
 
-a{
-    margin-top: 50px;
-    background-color: #000000;
-    color: #ffffff;
-    padding: 15px;
-    text-decoration: none;
-    font-size: 18px;
-    font-weight: 600;
-    border-radius: 5px;
-    border: 10px;
-    border-color: blue;
-    cursor: pointer;
-    position: absolute;
-    text-align: center;
-}
+
+/* Estilo para o cabeçalho */
+header {
+    background-color: #333; /* Cor de fundo do cabeçalho */
+    color: #fff; /* Cor do texto no cabeçalho */
+    padding: 20px; /* Espaçamento interno */
+  }
+  
+  /* Estilo para o contêiner "crazy" */
+  .crazy {
+    display: flex; /* Exibe os itens em linha */
+    justify-content: center; /* Centraliza os itens horizontalmente */
+    align-items: center; /* Centraliza os itens verticalmente */
+  }
+  
+  /* Estilo para o botão de fechar */
+  .close-btn {
+    font-size: 24px; /* Tamanho do ícone de fechar */
+    cursor: pointer; /* Altera o cursor ao passar o mouse sobre o botão */
+  }
+  
+  /* Estilo para o formulário */
+  .form {
+    background-color: #000000; /* Cor de fundo do formulário */
+    padding: 20px; /* Espaçamento interno do formulário */
+    border-radius: 5px; /* Borda arredondada */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Sombra */
+  }
+  
+  /* Estilo para o título do formulário */
+  .form h2 {
+    margin-bottom: 20px; /* Espaçamento inferior */
+  }
+  
+  /* Estilo para os elementos do formulário */
+  .form-element {
+    margin-bottom: 15px; /* Espaçamento inferior */
+  }
+  
+  /* Estilo para o rótulo do campo de entrada */
+  .form-element label {
+    display: block; /* Exibe o rótulo como bloco */
+    margin-bottom: 5px; /* Espaçamento inferior */
+  }
+  
+  /* Estilo para o campo de entrada */
+  .form-element input {
+    width: 100%; /* Largura total */
+    padding: 10px; /* Espaçamento interno */
+    border: 1px solid #ccc; /* Borda */
+    border-radius: 3px; /* Borda arredondada */
+    box-sizing: border-box; /* Tamanho da caixa de conteúdo */
+  }
+  
+  /* Estilo para o link de login */
+  .form-element a {
+    color: #ffffff; /* Cor do texto */
+    text-decoration: none; /* Remove a sublinhado */
+    font-weight: bold; /* Negrito */
+  }
+  
+  /* Estilo para o link de login ao passar o mouse */
+  .form-element a:hover {
+    text-decoration: underline; /* Adiciona sublinhado */
+  }
+  
