@@ -1,83 +1,104 @@
-document.addEventListener('DOMContentLoaded', function() {
-  // Obtenha referências aos elementos do DOM
-  const startQuizBtn = document.querySelector('.start-quiz');
-  const nextQuestionBtn = document.querySelector('.next-question');
-  const questionContainer = document.querySelector('.question-container');
-  const questionList = document.getElementById('question-list');
-  const submitBtn = document.getElementById('submit-btn');
-  const resultContainer = document.getElementById('result-container');
-  
-  // Adicione um ouvinte de evento de clique ao botão de início do quiz
-  startQuizBtn.addEventListener('click', function() {
-      // Mostre o contêiner de perguntas
-      questionContainer.classList.remove('hide');
-      // Esconda o botão de início do quiz
-      startQuizBtn.classList.add('hide');
-      // Iniciar o quiz
-      showQuestion(0);
-  });
+const quizContainer = document.getElementById('quiz-container');
+const questionList = document.getElementById('question-list');
+const submitBtn = document.getElementById('submit-btn');
+const resultContainer = document.getElementById('result-container');
 
-  // Função para mostrar uma pergunta com base no índice
-  function showQuestion(index) {
-      // Limpe o conteúdo da lista de perguntas
-      questionList.innerHTML = '';
-      // Obtenha a pergunta atual do array de perguntas
-      const question = questions[index];
-      // Crie o HTML da pergunta e suas opções
-      const questionHTML = `
-          <li>
-              <h3>${question.question}</h3>
-              <ul>
-                  ${question.options.map(option => `<li><input type="radio" name="question-${index}" value="${option}">${option}</li>`).join('')}
-              </ul>
-          </li>
-      `;
-      // Adicione o HTML da pergunta à lista de perguntas
-      questionList.innerHTML += questionHTML;
-      // Adicione um ouvinte de evento de clique ao botão de próxima pergunta
-      nextQuestionBtn.addEventListener('click', function() {
-          // Verifique se uma opção foi selecionada
-          const selectedOption = document.querySelector(`input[name="question-${index}"]:checked`);
-          if (!selectedOption) {
-              alert('Por favor, selecione uma opção.');
-              return;
-          }
-          // Avance para a próxima pergunta ou exiba o resultado se for a última pergunta
-          if (index < questions.length - 1) {
-              showQuestion(index + 1);
-          } else {
-              showResult();
-          }
-      });
-  }
+// Perguntas e respostas do quiz
+const questions = [
+    {
+        question: 'Qual é o tipo de bicicleta mais adequado para estradas planas?',
+        options: ['Mountain bike', 'Road bike', 'Hybrid bike'],
+        answer: 'Road bike'
+    },
+    {
+        question: 'Qual é o componente mais importante de uma bicicleta?',
+        options: ['Quadro', 'Rodas', 'Freios'],
+        answer: 'Quadro'
+    },
+    { 
+        question: "Qual é a principal parte do quadro de uma bicicleta?", 
+        options: ["Guidão", "Pedal", "Tubo superior"], 
+        answer: "Tubo superior" 
+    },
+    { 
+        question: "Em que ano foi criada a primeira bicicleta?", 
+        options: ["1817", "1890", "1850"], 
+        answer: "1817" 
+    },
+    { 
+        question: "Qual é a função do câmbio traseiro em uma bicicleta?", 
+        options: ["Mudar de marcha", "Frear a bicicleta", "Controlar a direção"], 
+        answer: "Mudar de marcha" 
+    },
+    { 
+        question: "O que significa a sigla 'BTT' em alguns países de língua portuguesa em referência ao ciclismo?", 
+        options: ["Bicicleta Técnica de Travessia", "Bicicleta Todo Terreno", "Bicicleta de Turismo e Trilhas"], 
+        answer: "Bicicleta Todo Terreno" 
+    },
+    { 
+        question: "Qual é a principal função das sapatas de freio em uma bicicleta?", 
+        options: ["Lubrificar a corrente", "Manter a bicicleta em pé", "Controlar a velocidade"], 
+        answer: "Controlar a velocidade" 
+    },
+    { 
+        question: "Qual desses acessórios é essencial para a segurança do ciclista durante a noite?", 
+        options: ["Colete refletivo", "Luvas", "Jaqueta de couro"], 
+        answer: "Colete refletivo" 
+    },
+    { 
+        question: "O que é um 'pinhão' em uma bicicleta?", 
+        options: ["Uma peça que conecta a corrente ao câmbio traseiro", "Uma peça que conecta a roda traseira ao quadro", "Uma peça que conecta a corrente ao pedal"], 
+        answer: "Uma peça que conecta a corrente ao câmbio traseiro" 
+    },
+    { 
+        question: "O que o termo 'cadência' descreve no ciclismo", 
+        options: ["O nível de resistência do freio", "A velocidade média", "A quantidade de rotações que o ciclista executa por minuto ao girar os pedais (RPM)"], 
+        answer: "A quantidade de rotações que o ciclista executa por minuto ao girar os pedais (RPM)" 
+    },
+];
 
-  // Função para calcular e exibir o resultado do quiz
-  function showResult() {
-      const userAnswers = [];
-      // Obtenha as respostas do usuário para cada pergunta
-      questions.forEach((question, index) => {
-          const userAnswer = document.querySelector(`input[name="question-${index}"]:checked`).value;
-          userAnswers.push(userAnswer);
-      });
+// Itera sobre as perguntas e cria o HTML correspondente para cada uma
+questions.forEach((question, index) => {
+    const questionHTML = `
+        <li>
+            <h3>${question.question}</h3>
+            <ul>
+                ${question.options.map(option => `<li><input type="radio" name="question-${index}" value="${option}">${option}</li>`).join('')}
+            </ul>
+        </li>
+    `;
+    questionList.innerHTML += questionHTML;
+});
 
-      // Obtenha as respostas corretas
-      const correctAnswers = questions.map(question => question.answer);
+// Adiciona um evento de clique ao botão de envio
+submitBtn.addEventListener('click', () => {
+    const userAnswers = [];
+    questions.forEach((question, index) => {
+        const userAnswer = document.querySelector(`input[name="question-${index}"]:checked`).value;
+        userAnswers.push(userAnswer);
+    });
 
-      // Calcular a pontuação do usuário
-      const score = userAnswers.reduce((acc, current, index) => {
-          if (current === correctAnswers[index]) {
-              acc++;
-          }
-          return acc;
-      }, 0);
+    const correctAnswers = questions.map(question => question.answer);
+    const score = userAnswers.reduce((acc, current, index) => {
+        if (current === correctAnswers[index]) {
+            acc++;
+        }
+        return acc;
+    }, 0);
 
-      // Gerar HTML com o resultado do quiz
-      const resultHTML = `
-          <h2>Você acertou ${score} de ${questions.length} perguntas!</h2>
-          <p>Parabéns! Você é um verdadeiro ciclista!</p>
-          <!-- Adicione outras informações do resultado aqui, se desejar -->
-      `;
-      // Exibir o resultado na tela
-      resultContainer.innerHTML = resultHTML;
-  }
+    const resultHTML = `
+        <h2>Você acertou ${score} de ${questions.length} perguntas!</h2>
+        <p>Parabéns! Você é um verdadeiro ciclista!</p>
+        <p>A resposta correta da alternativa 1 é: Road bike</p>
+        <p>A resposta correta da alternativa 2 é: Quadro</p>
+        <p>A resposta correta da alternativa 3 é: Tubo superior</p>
+        <p>A resposta correta da alternativa 4 é: 1817</p>
+        <p>A resposta correta da alternativa 5 é: Mudar de marcha</p>
+        <p>A resposta correta da alternativa 6 é: Bicicleta Todo Terreno</p>
+        <p>A resposta correta da alternativa 7 é: Controlar a velocidade</p>
+        <p>A resposta correta da alternativa 8 é: Colete refletivo</p>
+        <p>A resposta correta da alternativa 9 é: Uma peça que conecta a corrente ao câmbio traseiro</p>
+        <p>A resposta correta da alternativa 10 é: A quantidade de rotações que o ciclista executa por minuto ao girar os pedais (RPM)</p>
+    `;
+    resultContainer.innerHTML = resultHTML;
 });
